@@ -1,0 +1,54 @@
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+/* For a more mobile-app like feel, we can constrain the width on desktop */
+.mobile-container {
+    max-width: 420px;
+    height: 850px;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+/* Custom scrollbar for a cleaner look */
+.app-screen::-webkit-scrollbar {
+    width: 4px;
+}
+
+.app-screen::-webkit-scrollbar-thumb {
+    background-color: #cbd5e1;
+    border-radius: 20px;
+}
+
+.horizontal-scroll::-webkit-scrollbar {
+    height: 4px;
+}
+
+.horizontal-scroll::-webkit-scrollbar-thumb {
+    background-color: #e2e8f0;
+    border-radius: 20px;
+}
+
+/* Active nav item style */
+.nav-item.active svg {
+    color: #0ea5e9; /* sky-500 */
+}
+
+.nav-item.active span {
+    color: #020617; /* slate-900 */
+}
+
+/* Fade in animation for screens */
+.screen {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { 
+        opacity: 0; 
+        transform: translateY(10px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}

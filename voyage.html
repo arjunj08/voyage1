@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voyage - All-in-One Travel App</title>
+    <!-- Link to Tailwind CSS and Google Fonts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Link to our custom stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Add a manifest file for PWA capabilities -->
+    <link rel="manifest" href="manifest.json">
+</head>
+<body class="bg-slate-100 flex items-center justify-center min-h-screen p-4">
+
+    <!-- Mobile App Container -->
+    <div id="app-container" class="mobile-container w-full bg-white rounded-3xl border-4 border-slate-800 overflow-hidden relative flex flex-col">
+         <!-- Background Image & Overlay -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover" alt="Scenic travel destination background" onerror="this.onerror=null;this.src='https://placehold.co/420x850/a5f3fc/0c4a6e?text=Voyage';">
+        </div>
+        <div class="absolute inset-0 bg-white/80 backdrop-blur-sm z-10"></div>
+
+        <!-- Content Wrapper -->
+        <div class="relative z-20 flex flex-col h-full">
+            <!-- Header -->
+            <header class="bg-white/80 backdrop-blur-sm p-4 flex justify-between items-center border-b border-slate-200/80">
+                <h1 class="text-xl font-bold text-slate-800">Voyage</h1>
+                <div class="flex items-center space-x-4">
+                    <button id="notification-btn" class="relative text-slate-600 hover:text-sky-500">
+                        <i data-lucide="bell"></i>
+                        <span id="notification-dot" class="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full hidden"></span>
+                    </button>
+                    <div class="relative">
+                        <button id="profile-btn">
+                            <img src="https://placehold.co/40x40/E2E8F0/4A5568?text=U" alt="User Profile" class="w-8 h-8 rounded-full" onerror="this.onerror=null;this.src='https://placehold.co/40x40/f87171/ffffff?text=X';">
+                        </button>
+                        <div id="profile-dropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 hidden">
+                            <a href="#" id="view-profile-link" class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100">My Profile</a>
+                            <a href="#" id="logout-link" class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content Area -->
+            <main class="flex-1 overflow-y-auto bg-transparent">
+                <!-- Home Screen -->
+                <div id="home-screen" class="screen app-screen p-4 space-y-6">
+                    <h2 class="text-2xl font-bold text-slate-800">Where to next?</h2>
+                    
+                    <!-- Booking Tabs -->
+                    <div class="bg-white p-2 rounded-xl shadow-md">
+                        <div class="flex border-b">
+                            <button class="booking-tab active flex-1 p-3 text-sm font-semibold text-center text-sky-500 border-b-2 border-sky-500" data-tab="flights">
+                                <i data-lucide="plane" class="inline-block mr-2 h-5 w-5"></i>Flights
+                            </button>
+                            <button class="booking-tab flex-1 p-3 text-sm font-semibold text-center text-slate-500" data-tab="hotels">
+                                <i data-lucide="building-2" class="inline-block mr-2 h-5 w-5"></i>Hotels
+                            </button>
+                            <button class="booking-tab flex-1 p-3 text-sm font-semibold text-center text-slate-500" data-tab="cars">
+                                <i data-lucide="car" class="inline-block mr-2 h-5 w-5"></i>Cars
+                            </button>
+                        </div>
+
+                        <!-- Search Forms -->
+                        <div id="booking-forms" class="p-4 space-y-4">
+                            <div id="flights-form">
+                                <input type="text" placeholder="From: Hyderabad (HYD)" class="w-full p-3 mb-3 border rounded-lg focus:ring-2 focus:ring-sky-500 transition">
+                                <input type="text" placeholder="To: Kochi (COK)" class="w-full p-3 mb-3 border rounded-lg focus:ring-2 focus:ring-sky-500 transition">
+                                <div class="grid grid-cols-2 gap-3">
+                                    <input type="text" placeholder="Depart" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-sky-500 transition date-input" required>
+                                    <input type="text" placeholder="Return" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-sky-500 transition date-input" required>
+                                </div>
+                            </div>
+                            <div id="hotels-form" class="hidden">
+                                <input type="text" placeholder="Destination: Kochi, Kerala" class="w-full p-3 mb-3 border rounded-lg focus:ring-2 focus:ring-sky-500 transition">
+                                <div class="grid grid-cols-2 gap-3">
+                                    <input type="text" placeholder="Check-in" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-sky-500 transition date-input" required>
+                                    <input type="text" placeholder="Check-out" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-sky-500 transition date-input" required>
+                                </div>
+                            </div>
+                            <div id="cars-form" class="hidden">
+                               <input type="text" placeholder="Pick-up location: Kochi Airport (COK)" class="w-full p-3 mb-3 border rounded-lg focus:ring-2 focus:ring-sky-500 transition">
+                                 <div class="grid grid-cols-2 gap-3">
+                                    <input type="text" placeholder="Start Date" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-sky-500 transition date-input" required>
+                                    <input type="text" placeholder="End Date" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-sky-500 transition date-input" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-4 pt-0">
+                             <button id="search-btn" class="w-full bg-gradient-to-r from-sky-500 to-cyan-400 text-white font-bold py-3 px-4 rounded-lg hover:from-sky-600 hover:to-cyan-500 transition-all duration-300 shadow-lg hover:shadow-sky-300/40 flex items-center justify-center">
+                                <i data-lucide="search" class="mr-2 h-5 w-5"></i>Search Flights
+                            </button>
+                        </div>
+                    </div>
+
+                     <!-- Featured Destinations -->
+                     <div class="featured-destination-card relative w-full h-48 rounded-xl shadow-md overflow-hidden cursor-pointer group">
+                        <img loading="lazy" src="https://images.unsplash.com/photo-1512100356356-de1b84283e18?q=80&w=1975&auto=format&fit=crop" alt="Featured Destination: Maldives" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-300" onerror="this.onerror=null;this.src='https://placehold.co/600x400/a5f3fc/0c4a6e?text=Maldives';">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-4">
+                            <h3 class="text-white text-xl font-bold">Featured: Maldives</h3>
+                            <p class="text-white text-sm">Discover pristine beaches and turquoise waters.</p>
+                        </div>
+                    </div>
+                    <div class="featured-destination-card relative w-full h-48 rounded-xl shadow-md overflow-hidden cursor-pointer group">
+                        <img loading="lazy" src="https://images.unsplash.com/photo-1560703650-ef3e0f254ae0?q=80&w=1974&auto=format&fit=crop" alt="Featured Destination: Santorini" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-300" onerror="this.onerror=null;this.src='https://placehold.co/600x400/a5f3fc/0c4a6e?text=Santorini';">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-4">
+                            <h3 class="text-white text-xl font-bold">Santorini, Greece</h3>
+                            <p class="text-white text-sm">Iconic sunsets and whitewashed villages.</p>
+                        </div>
+                    </div>
+                    <div class="featured-destination-card relative w-full h-48 rounded-xl shadow-md overflow-hidden cursor-pointer group">
+                        <img loading="lazy" src="https://images.unsplash.com/photo-1542051841857-5f90071e7989?q=80&w=2070&auto-format&fit=crop" alt="Featured Destination: Kyoto" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-300" onerror="this.onerror=null;this.src='https://placehold.co/600x400/a5f3fc/0c4a6e?text=Kyoto';">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-4">
+                            <h3 class="text-white text-xl font-bold">Kyoto, Japan</h3>
+                            <p class="text-white text-sm">Experience ancient temples and traditions.</p>
+                        </div>
+                    </div>
+                    <!-- ... more featured destinations with loading="lazy" ... -->
+                </div>
+
+                <!-- All other screen divs here, unchanged except for lazy loading images and removing inline JS -->
+                <!-- Example of a modified screen -->
+                 <div id="flight-booking-screen" class="screen app-screen p-4 space-y-4 hidden">
+                    <div class="flex items-center">
+                        <button id="back-to-results-flight" class="text-slate-600 hover:text-sky-500 mr-3"><i data-lucide="arrow-left"></i></button>
+                        <h2 class="text-2xl font-bold text-slate-800">Book Flight</h2>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl shadow-md">
+                        <h3 class="font-bold mb-2 border-b pb-2">Flight Summary</h3>
+                         <div class="flex justify-between items-center mt-3">
+                            <div>
+                                <p class="font-bold text-lg">Emirates</p>
+                                <p class="text-sm text-slate-500">Round trip to Dubai (DXB)</p>
+                            </div>
+                            <p class="font-bold text-xl text-sky-600">$350</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl shadow-md">
+                        <h3 class="font-bold mb-3">Passenger Details</h3>
+                        <form class="space-y-3">
+                            <input type="text" placeholder="Full Name (as on passport)" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-sky-500 transition">
+                            <div class="grid grid-cols-2 gap-3">
+                                <input type="text" placeholder="Date of Birth" class="date-input w-full p-3 border rounded-lg focus:ring-2 focus:ring-sky-500 transition">
+                                <input type="text" placeholder="Passport Number" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-sky-500 transition">
+                            </div>
+                        </form>
+                    </div>
+                    <button id="proceed-to-payment-btn" class="w-full bg-gradient-to-r from-sky-500 to-cyan-400 text-white font-bold py-3 px-4 rounded-lg">Proceed to Payment</button>
+                </div>
+
+                <!-- ... All other screen divs would go here ... -->
+
+            </main>
+        
+            <!-- Bottom Navigation -->
+            <nav class="bg-white/80 backdrop-blur-sm border-t border-slate-200/80 flex justify-around">
+                <!-- Nav items are unchanged -->
+                <button class="nav-item active flex-1 flex flex-col items-center justify-center p-2 text-slate-500 hover:text-sky-500" data-screen="home-screen">
+                    <div class="relative"><div class="absolute -top-2 left-1/2 -translate-x-1/2 h-1 w-5 bg-sky-500 rounded-full"></div><i data-lucide="home"></i></div>
+                    <span class="text-xs font-medium">Home</span>
+                </button>
+                <button class="nav-item flex-1 flex flex-col items-center justify-center p-2 text-slate-500 hover:text-sky-500" data-screen="trips-screen">
+                    <div class="relative"><div class="absolute -top-2 left-1/2 -translate-x-1/2 h-1 w-5 bg-sky-500 rounded-full hidden"></div><i data-lucide="briefcase"></i></div>
+                    <span class="text-xs font-medium">Trips</span>
+                </button>
+                 <!-- ... other nav items ... -->
+            </nav>
+        </div>
+        
+        <!-- Modal for notifications, payments etc. -->
+        <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden z-50">
+            <div id="modal-content" class="bg-white rounded-2xl w-full max-w-sm p-6 text-center shadow-xl transform transition-all">
+                <!-- Modal content will be injected here -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Deferred script loading for performance -->
+    <script src="https://unpkg.com/lucide@latest" defer></script>
+    <script src="script.js" defer></script>
+
+    <!-- Service Worker for offline capabilities -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    })
+                    .catch(error => {
+                        console.log('ServiceWorker registration failed: ', error);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>
+
