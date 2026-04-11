@@ -12,12 +12,6 @@ A sleek, mobile-first travel app with AI-powered trip planning and support chat 
 💳 Booking Flow — passenger details & payment simulation
 
 
-🛠️ Tech Stack
-Show Image
-Show Image
-Show Image
-Show Image
-
 📁 File Structure
 voyage1/
 ├── voyage.html      # Main app (all screens)
@@ -39,8 +33,14 @@ Open voyage.html in your browser — that's it!
 The AI features require an Anthropic API key passed through the claude.ai artifact environment.
 
 
-📸 Screens
+📸 Screens 
+
 HomeAI PlannerSupport ChatFlight/Hotel/Car searchDay-by-day AI itineraryReal AI conversation
+
+Screenshots 
+<img width="602" height="413" alt="image" src="https://github.com/user-attachments/assets/cc56093a-4383-4eb7-bca2-d2b709332830" />
+<img width="603" height="491" alt="image" src="https://github.com/user-attachments/assets/a76e4192-18f9-43ba-b22c-48d53ffb8077" />
+<img width="560" height="388" alt="image" src="https://github.com/user-attachments/assets/6eaeac10-e4ac-4366-b547-30314dc66bb5" />
 
 👨‍💻 Author
 Arjun J — @arjunj08
