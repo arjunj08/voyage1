@@ -44,6 +44,10 @@ Feature	Description
 🤖 AI Assistant	Chat-based travel expert
 🔍 Smart Search	Flights, hotels, and car rentals
 🏖️ Experiences	Curated travel activities
+🌤️ Weather Forecast	Get real-time weather for destinations
+💱 Currency Converter	Convert between currencies
+📅 Trip History	Save and view booked trips
+🔔 Notifications	Trip reminders and alerts
 📱 PWA Support	Install like a native app
 💳 Booking Flow	End-to-end travel simulation
 </div>
@@ -53,7 +57,7 @@ Feature	Description
 <br/>
 🏗️ System Architecture
 voyage1/
-├── voyage.html        → Unified UI (entire app)
+├── voyage.html        → Unified UI (entire app with weather, currency, trips, notifications)
 ├── styles.css         → Design system + animations
 ├── app.js             → App logic + AI orchestration
 ├── sw.js              → Offline engine (PWA caching)

@@ -232,11 +232,13 @@
     <header class="app-header">
       <h1 class="header-logo">Voyage</h1>
       <div class="header-actions">
+        <button id="currency-btn" class="icon-btn">
+          <i data-lucide="dollar-sign"></i>
+        </button>
         <button id="notification-btn" class="icon-btn">
           <i data-lucide="bell"></i>
           <span id="notification-dot" class="notif-dot hidden"></span>
         </button>
-        <div class="profile-wrap">
           <button id="profile-btn" style="background:none;border:none;padding:0;cursor:pointer;">
             <img src="https://placehold.co/40x40/0ea5e9/ffffff?text=A" alt="User" class="profile-avatar">
           </button>
@@ -375,12 +377,42 @@
           <div id="itinerary-result" class="itinerary-output hidden"></div>
         </div>
       </div>
- 
+
+      <!-- WEATHER -->
+      <div id="weather-screen" class="screen app-screen hidden">
+        <div class="screen-pad">
+          <h2 class="screen-title">Weather Forecast</h2>
+          <div class="info-card">
+            <input id="weather-city" type="text" placeholder="Enter city name" class="form-input" style="margin-bottom:16px;">
+            <button id="get-weather-btn" class="btn-primary"><i data-lucide="search"></i> Get Weather</button>
+          </div>
+          <div id="weather-result" class="info-card hidden">
+            <h3 class="card-title" id="weather-location">New York</h3>
+            <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;">
+              <div style="font-size:48px;" id="weather-icon">☀️</div>
+              <div>
+                <p style="font-size:32px;font-weight:700;color:var(--sky);" id="weather-temp">22°C</p>
+                <p style="color:var(--slate-500);" id="weather-desc">Sunny</p>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;">
+              <div><p style="font-weight:600;">Humidity</p><p id="weather-humidity">65%</p></div>
+              <div><p style="font-weight:600;">Wind</p><p id="weather-wind">5 km/h</p></div>
+              <div><p style="font-weight:600;">Feels Like</p><p id="weather-feels">25°C</p></div>
+              <div><p style="font-weight:600;">Visibility</p><p id="weather-vis">10 km</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- TRIPS -->
       <div id="trips-screen" class="screen app-screen hidden">
         <div class="screen-pad">
           <h2 class="screen-title">My Trips</h2>
-          <div class="empty-state">
+          <div id="trips-list">
+            <!-- Trips will be loaded here -->
+          </div>
+          <div id="no-trips" class="empty-state">
             <div class="empty-icon">🗺️</div>
             <p class="empty-title">No trips yet</p>
             <p class="empty-sub">Search for flights, hotels or cars to plan your first trip!</p>
@@ -398,6 +430,8 @@
             <div class="explore-card"><img src="https://images.unsplash.com/photo-1549144511-f099e773c147?q=80&w=600" alt="Paris" loading="lazy" onerror="this.src='https://placehold.co/300x200/0ea5e9/fff?text=Paris'"><div class="explore-info"><p class="explore-name">Paris</p><p class="explore-price">from $550</p></div></div>
             <div class="explore-card"><img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=600" alt="Bali" loading="lazy" onerror="this.src='https://placehold.co/300x200/0ea5e9/fff?text=Bali'"><div class="explore-info"><p class="explore-name">Bali</p><p class="explore-price">from $280</p></div></div>
             <div class="explore-card"><img src="https://images.unsplash.com/photo-1518684079-3c830dcef090?q=80&w=600" alt="Dubai" loading="lazy" onerror="this.src='https://placehold.co/300x200/0ea5e9/fff?text=Dubai'"><div class="explore-info"><p class="explore-name">Dubai</p><p class="explore-price">from $350</p></div></div>
+            <div class="explore-card"><img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=600" alt="Switzerland" loading="lazy" onerror="this.src='https://placehold.co/300x200/0ea5e9/fff?text=Switzerland'"><div class="explore-info"><p class="explore-name">Switzerland</p><p class="explore-price">from $450</p></div></div>
+            <div class="explore-card"><img src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=600" alt="Thailand" loading="lazy" onerror="this.src='https://placehold.co/300x200/0ea5e9/fff?text=Thailand'"><div class="explore-info"><p class="explore-name">Thailand</p><p class="explore-price">from $250</p></div></div>
           </div>
         </div>
       </div>
@@ -445,6 +479,7 @@
     <nav class="bottom-nav">
       <button class="nav-item active" data-screen="home-screen"><div class="nav-indicator"></div><i data-lucide="home"></i><span>Home</span></button>
       <button class="nav-item" data-screen="explore-screen"><div class="nav-indicator hidden"></div><i data-lucide="compass"></i><span>Explore</span></button>
+      <button class="nav-item" data-screen="weather-screen"><div class="nav-indicator hidden"></div><i data-lucide="cloud-sun"></i><span>Weather</span></button>
       <button class="nav-item" data-screen="trips-screen"><div class="nav-indicator hidden"></div><i data-lucide="briefcase"></i><span>Trips</span></button>
       <button class="nav-item" data-screen="support-screen"><div class="nav-indicator hidden"></div><i data-lucide="message-circle"></i><span>Support</span></button>
       <button class="nav-item" data-screen="profile-screen"><div class="nav-indicator hidden"></div><i data-lucide="user"></i><span>Profile</span></button>
@@ -456,6 +491,39 @@
 <!-- Modal -->
 <div id="modal" class="modal-overlay hidden">
   <div id="modal-content" class="modal-box"></div>
+</div>
+
+<!-- Currency Modal -->
+<div id="currency-modal" class="modal-overlay hidden">
+  <div class="modal-box">
+    <h3 style="font-family:'Syne',sans-serif;font-size:20px;font-weight:700;margin-bottom:16px;">Currency Converter</h3>
+    <div style="display:flex;gap:10px;margin-bottom:16px;">
+      <input id="currency-amount" type="number" placeholder="Amount" class="form-input" style="flex:1;">
+      <select id="currency-from" class="form-input" style="flex:1;">
+        <option value="USD">USD</option><option value="EUR">EUR</option><option value="GBP">GBP</option><option value="INR">INR</option><option value="JPY">JPY</option>
+      </select>
+      <span style="align-self:center;">to</span>
+      <select id="currency-to" class="form-input" style="flex:1;">
+        <option value="INR">INR</option><option value="USD">USD</option><option value="EUR">EUR</option><option value="GBP">GBP</option><option value="JPY">JPY</option>
+      </select>
+    </div>
+    <button id="convert-btn" class="btn-primary" style="margin-bottom:16px;"><i data-lucide="refresh-ccw"></i> Convert</button>
+    <p id="conversion-result" style="font-size:18px;font-weight:600;color:var(--sky);text-align:center;"></p>
+    <button data-modal-action="close" style="width:100%;background:none;border:none;padding:12px;font-size:14px;color:#64748b;cursor:pointer;">Close</button>
+  </div>
+</div>
+
+<!-- Notifications Modal -->
+<div id="notifications-modal" class="modal-overlay hidden">
+  <div class="modal-box">
+    <h3 style="font-family:'Syne',sans-serif;font-size:20px;font-weight:700;margin-bottom:16px;">Notifications</h3>
+    <div id="notifications-list" style="max-height:300px;overflow-y:auto;">
+      <div class="info-card" style="margin-bottom:12px;"><p>🎉 Your flight booking was confirmed!</p><p style="font-size:12px;color:#64748b;">Just now</p></div>
+      <div class="info-card" style="margin-bottom:12px;"><p>🌤️ Weather alert: Rain expected in Paris tomorrow.</p><p style="font-size:12px;color:#64748b;">2 hours ago</p></div>
+      <div class="info-card"><p>💰 Currency tip: 1 USD = 83 INR today.</p><p style="font-size:12px;color:#64748b;">1 day ago</p></div>
+    </div>
+    <button data-modal-action="close" style="width:100%;background:none;border:none;padding:12px;font-size:14px;color:#64748b;cursor:pointer;margin-top:16px;">Close</button>
+  </div>
 </div>
  
 <script>
@@ -538,6 +606,15 @@ document.addEventListener('DOMContentLoaded', function () {
     showModal(`<div style="font-size:48px;margin-bottom:12px;">💳</div><h3 style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;margin-bottom:8px;">Payment</h3><p style="font-size:13px;color:#64748b;margin-bottom:20px;">Demo mode — no real charge</p><button onclick="confirmPay()" style="width:100%;background:linear-gradient(135deg,#0ea5e9,#22d3ee);color:white;border:none;border-radius:12px;padding:14px;font-size:15px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">Confirm & Pay</button><button data-modal-action="close" style="width:100%;background:none;border:none;padding:12px;font-size:14px;color:#64748b;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:4px;">Cancel</button>`);
   });
   window.confirmPay = () => {
+    const airline = document.getElementById('booking-airline').textContent;
+    const route = document.getElementById('booking-route').textContent;
+    const price = document.getElementById('booking-price').textContent;
+    // Save to localStorage
+    const trips = JSON.parse(localStorage.getItem('voyage-trips') || '[]');
+    trips.push({ airline, route, price, date: new Date().toLocaleDateString() });
+    localStorage.setItem('voyage-trips', JSON.stringify(trips));
+    // Update profile stats
+    document.querySelector('.stat-num').textContent = trips.length;
     document.getElementById('modal-content').innerHTML = `<div style="font-size:56px;margin-bottom:12px;">🎉</div><h3 style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;margin-bottom:8px;">Booking Confirmed!</h3><p style="font-size:14px;color:#64748b;margin-bottom:20px;">Your flight has been booked successfully!</p><button onclick="closeM()" style="width:100%;background:linear-gradient(135deg,#0ea5e9,#22d3ee);color:white;border:none;border-radius:12px;padding:14px;font-size:15px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">Back to Home</button>`;
   };
   window.closeM = () => { closeModal(); navigateToScreen('home-screen'); };
@@ -595,11 +672,37 @@ document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('chat-send-btn')?.addEventListener('click', () => { const i=document.getElementById('chat-input'); const m=i.value.trim(); if(m){i.value='';sendChat(m);} });
   document.getElementById('chat-input')?.addEventListener('keypress', e => { if(e.key==='Enter'){const m=e.target.value.trim();if(m){e.target.value='';sendChat(m);}} });
  
-  // PROFILE DROPDOWN
-  document.getElementById('profile-btn')?.addEventListener('click', e => { e.stopPropagation(); document.getElementById('profile-dropdown')?.classList.toggle('hidden'); });
-  document.addEventListener('click', () => document.getElementById('profile-dropdown')?.classList.add('hidden'));
-  document.getElementById('view-profile-link')?.addEventListener('click', e => { e.preventDefault(); document.getElementById('profile-dropdown')?.classList.add('hidden'); navigateToScreen('profile-screen'); });
-});
+  // TRIPS
+  function loadTrips() {
+    const trips = JSON.parse(localStorage.getItem('voyage-trips') || '[]');
+    const list = document.getElementById('trips-list');
+    const noTrips = document.getElementById('no-trips');
+    list.innerHTML = '';
+    if (trips.length === 0) {
+      noTrips.classList.remove('hidden');
+      return;
+    }
+    noTrips.classList.add('hidden');
+    trips.forEach(trip => {
+      const card = document.createElement('div');
+      card.className = 'info-card';
+      card.innerHTML = `<h3 class="card-title">${trip.airline} - ${trip.route}</h3><p>Booked on ${trip.date}</p><p style="font-size:18px;font-weight:700;color:var(--sky);">${trip.price}</p>`;
+      list.appendChild(card);
+    });
+  }
+  // Load trips when navigating to trips screen
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', () => {
+      if (item.dataset.screen === 'trips-screen') loadTrips();
+    });
+  });
+
+  // NOTIFICATIONS
+  document.getElementById('notification-btn')?.addEventListener('click', () => {
+    document.getElementById('notifications-modal').classList.remove('hidden');
+    document.getElementById('notification-dot').classList.add('hidden'); // Hide dot when opened
+  });
+  document.body.addEventListener('click', e => { if (e.target.dataset.modalAction === 'close' || e.target.id === 'notifications-modal') document.getElementById('notifications-modal').classList.add('hidden'); });
 </script>
 </body>
 </html>
